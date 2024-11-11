@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';  // Import js-cookie
 import io from 'socket.io-client';
-import { SaveMessage, getMessageRoom } from '../../services/api';
+import { SaveMessage } from '../../services/api';
 
 const socket = io('http://localhost:5004');  // Backend portu 4000
 
