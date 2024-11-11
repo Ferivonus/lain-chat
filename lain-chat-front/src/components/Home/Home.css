@@ -1,0 +1,99 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #121212;
+    /* Dark background */
+    color: #e0e0e0;
+    /* Light gray text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 1.2rem;
+}
+
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+}
+
+.home-content {
+    background-color: #1e1e1e;
+    /* Slightly lighter background */
+    padding: 40px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    /* Neon glow */
+    transition: all 0.3s ease;
+}
+
+.home-content:hover {
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.7);
+    /* More glowing effect on hover */
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    color: #00ff00;
+    /* Neon green color */
+    margin-bottom: 20px;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+    /* Glowing text effect */
+}
+
+.intro-text {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    color: #cccccc;
+    /* Light gray color */
+}
+
+.cta {
+    margin-top: 20px;
+}
+
+.join-button {
+    text-decoration: none;
+    background-color: #ff00ff;
+    /* Neon purple color */
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 10px 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.join-button:hover {
+    background-color: #ff00cc;
+    /* Lighter purple on hover */
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+    /* Glowing effect */
+}
+
+/* Animation for entrance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.home-content {
+    animation: fadeIn 1s ease-in-out;
+}

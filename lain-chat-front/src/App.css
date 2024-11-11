@@ -1,0 +1,68 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: #121212;
+  /* Dark background */
+  color: #e0e0e0;
+  /* Light gray text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+/* Navbar Styles */
+.navbar {
+  width: 100%;
+  background-color: #1e1e1e;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+  /* Green glow */
+  text-align: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #00ff00;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ff00ff;
+  /* Neon purple on hover */
+  text-shadow: 0 0 10px #ff00ff;
+}
+
+/* App Title */
+.app-title {
+  font-size: 3rem;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+  margin-top: 20px;
+  text-align: center;
+}
