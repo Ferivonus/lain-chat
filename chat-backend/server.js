@@ -22,59 +22,51 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// API rotaları
-app.use('/api/messages', messageRoutes);  // Mesajlarla ilgili API
-app.use('/api/auth', authRoutes);        // Login ve Register API
-app.use('/api/rooms', roomRoutes);       // Yeni 'rooms' API
+app.use('/api/messages', messageRoutes);  
+app.use('/api/auth', authRoutes);        
+app.use('/api/rooms', roomRoutes);       
 
-// MongoDB bağlantısı
-const uri = process.env.DB_URI;  // Fetch the DB_URI from environment variables
+const uri = process.env.DB_URI;  
 
-console.log('DB URI:', uri);  // Log the URI to ensure it's loaded properly
+console.log('DB URI:', uri);  
 
 mongoose.connect(uri)
   .then(() => console.log('MongoDB veritabanına bağlanıldı'))
   .catch(err => {
     console.log('MongoDB bağlantı hatası:', err);
-    process.exit(1);  // Stop the app if there's a DB connection issue
+    process.exit(1);  
   });
 
 app.get('/', (req, res) => {
     res.send('Socket.IO and MongoDB Server is running');
 });
 
-// API server'ını başlatıyoruz
 app.listen(apiPort, () => {
   console.log(`API Server running on port ${apiPort}`);
 });
 
-// Socket.IO server'ını 5004 portunda başlatıyoruz
-const server = http.createServer(); // Socket.IO server için yeni bir HTTP server'ı oluşturuyoruz
+const server = http.createServer(); 
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",  // React frontend'iniz hangi portta çalışıyorsa buraya onu yazın
+    origin: "http://localhost:3000",  
     methods: ["GET", "POST"]
   }
 });
 
-// Odaya mesaj göndermek için event
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    // Kullanıcı bir odaya katıldığında
     socket.on('joinRoom', (room) => {
-        socket.join(room);  // Kullanıcı belirli bir odaya katılır
+        socket.join(room);  
         console.log(`User joined room: ${room}`);
         socket.emit('message', `You have joined the room: ${room}`);
     });
 
-    // Odaya mesaj gönderildiğinde
     socket.on('chatMessage', (data) => {
         const { room, message } = data;
-        io.to(room).emit('chatMessage', message);  // Oda içindeki tüm kullanıcılara mesaj gönder
+        io.to(room).emit('chatMessage', message);  
     });
 
-    // Bağlantı kesildiğinde
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
@@ -84,7 +76,6 @@ io.on('connection', (socket) => {
     });
 });
 
-// Socket.IO server'ını 5004 portunda başlatıyoruz
 server.listen(socketPort, () => {
   console.log(`Socket.IO Server running on port ${socketPort}`);
 });

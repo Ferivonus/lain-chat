@@ -1,28 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const Message = require('../models/Message');  // Import the message model
+const Message = require('../models/Message');  
 
-// Send message (POST)
 router.post('/send', async (req, res) => {
-  const { roomId, message, username } = req.body;  // Extract roomId and message from the request body
+  const { roomId, message, username } = req.body;  
 
-  // Validate roomId
   if (!roomId || typeof roomId !== 'string' || roomId.trim() === '') {
     return res.status(400).send({ error: 'Room ID is required and must be valid.' });
   }
 
-  // Validate message
   if (!message || typeof message !== 'string' || message.trim() === '') {
     return res.status(400).send({ error: 'Message is required and must be valid.' });
   }
 
-  // Validate username (optional)
   if (username && (typeof username !== 'string' || username.trim() === '')) {
     return res.status(400).send({ error: 'Invalid username.' });
   }
 
   try {
-    // Save the new message to MongoDB
     const newMessage = new Message({
       roomId: roomId,
       message: message,
@@ -39,20 +34,16 @@ router.post('/send', async (req, res) => {
   }
 });
 
-// Get messages (GET)
 router.get('/:roomId', async (req, res) => {
-  const { roomId } = req.params;  // Extract roomId from URL parameters
+  const { roomId } = req.params;  
 
-  // Validate roomId
   if (!roomId) {
     return res.status(400).send({ error: 'Room ID is required.' });
   }
 
   try {
-    // Fetch and sort messages by roomId and timestamp (newest first)
     const messages = await Message.find({ roomId: roomId }).sort({ timestamp: -1 });
 
-    // Check if no messages found
     if (messages.length === 0) {
       return res.status(404).send({ error: 'No messages found.' });
     }
