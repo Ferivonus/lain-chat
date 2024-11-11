@@ -12,9 +12,8 @@ const Register = () => {
   const handleRegister = async (e) => {
   e.preventDefault();
   try {
-    // Pass the data as an object
     await registerUser({ username, password });
-    navigate('/login');  // Kayıt sonrası login sayfasına yönlendir
+    navigate('/login');  
   } catch (err) {
     setError('Kayıt başarısız, tekrar deneyin.');
   }

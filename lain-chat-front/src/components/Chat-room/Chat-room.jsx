@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';  // Import js-cookie
 import io from 'socket.io-client';
 import { SaveMessage, getMessageRoom } from '../../services/api';
 
-// Backend sunucusunun adresi
 const socket = io('http://localhost:5004');  // Backend portu 4000
 
 function ChatRoom() {
@@ -12,10 +11,10 @@ function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [room, setRoom] = useState('');
   const [currentRoom, setCurrentRoom] = useState('');
-  const { room: roomParam } = useParams();  // URL parametresindeki oda ismi
-  const [username, setUsername] = useState('');  // Kullanıcı adı için state
+  const { room: roomParam } = useParams(); 
+  const [username, setUsername] = useState('');  
 
-  const navigate = useNavigate();  // Kullanıcıyı yönlendirecek
+  const navigate = useNavigate();  
 
   useEffect(() => {
 
@@ -27,17 +26,16 @@ function ChatRoom() {
     }
 
     if (roomParam && roomParam !== currentRoom) {
-      setCurrentRoom(roomParam);  // Odayı belirle
-      setMessages([]);  // Eski mesajları temizle
+      setCurrentRoom(roomParam);  
+      setMessages([]);  
     }
 
-    // Sunucudan gelen mesajları dinleyin
     socket.on('chatMessage', (msg) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
     socket.on('message', (msg) => {
-      alert(msg);  // Kullanıcıya odaya katıldığını bildiren mesaj
+      alert(msg); 
     });
 
     return () => {
@@ -65,11 +63,11 @@ function ChatRoom() {
 
   const handleJoinRoom = () => {
     if (room) {
-      socket.emit('joinRoom', room);  // Odaya katılmak için
-      setCurrentRoom(room);  // Hangi odada olduğumuzu kaydet
-      setMessages([]);  // Yeni odaya geçerken eski mesajları temizleyin
-      setRoom('');  // Oda inputunu temizle
-      navigate(`/chat/${room}`);  // URL'yi dinamik olarak değiştir
+      socket.emit('joinRoom', room);  
+      setCurrentRoom(room);  
+      setMessages([]);  
+      setRoom('');  
+      navigate(`/chat/${room}`);  
     }
   };
 
@@ -77,7 +75,6 @@ function ChatRoom() {
     <div className="ChatRoom">
       <h1>Chat Room</h1>
 
-      {/* Odaya katılmak için alan */}
       {!currentRoom && (
         <div>
           <input
@@ -90,7 +87,6 @@ function ChatRoom() {
         </div>
       )}
 
-      {/* Odaya katıldıysa mesajlaşma alanı */}
       {currentRoom && (
         <div>
           <h2>Room: {currentRoom}</h2>
@@ -100,7 +96,6 @@ function ChatRoom() {
             ))}
           </div>
 
-          {/* Mesaj gönderme */}
           <div>
             <input
               type="text"

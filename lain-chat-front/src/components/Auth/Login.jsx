@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../services/api';
-import Cookies from 'js-cookie';  // Import js-cookie
+import Cookies from 'js-cookie'; 
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,16 +12,14 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Pass username and password as an object
       const response = await loginUser({ username, password });
       
-      // Save the token, username, and password in cookies
-      Cookies.set('token', response.token, { expires: 1 });  // Token'ı çerezlere kaydet (1 gün süreyle)
-      Cookies.set('username', username, { expires: 1 });  // Kullanıcı adını çerezlere kaydet
-      Cookies.set('password', password, { expires: 1 });  // Parolayı çerezlere kaydet
+      Cookies.set('token', response.token, { expires: 1 });  
+      Cookies.set('username', username, { expires: 1 });  
+      Cookies.set('password', password, { expires: 1 });  
       
       // Redirect to the homepage
-      navigate('/');  // Ana sayfaya yönlendir
+      navigate('/');  
     } catch (err) {
       setError('Giriş başarısız, tekrar deneyin.');
     }
