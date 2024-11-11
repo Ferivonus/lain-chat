@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';  // Import js-cookie
 import io from 'socket.io-client';
+import { SaveMessage, getMessageRoom } from '../../services/api';
 
 // Backend sunucusunun adresi
 const socket = io('http://localhost:5004');  // Backend portu 4000
@@ -11,9 +13,19 @@ function ChatRoom() {
   const [room, setRoom] = useState('');
   const [currentRoom, setCurrentRoom] = useState('');
   const { room: roomParam } = useParams();  // URL parametresindeki oda ismi
+  const [username, setUsername] = useState('');  // Kullanıcı adı için state
+
   const navigate = useNavigate();  // Kullanıcıyı yönlendirecek
 
   useEffect(() => {
+
+    const storedUsername = Cookies.get('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    } else {
+      console.error('Kullanıcı adı bulunamadı. Giriş yapmayı unutmayın.');
+    }
+
     if (roomParam && roomParam !== currentRoom) {
       setCurrentRoom(roomParam);  // Odayı belirle
       setMessages([]);  // Eski mesajları temizle
@@ -34,12 +46,22 @@ function ChatRoom() {
     };
   }, [roomParam, currentRoom]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (message && currentRoom) {
+      SaveMessageMongoDB();
       socket.emit('chatMessage', { room: currentRoom, message });
       setMessage('');
     }
   };
+
+  const SaveMessageMongoDB = async () => {
+    try{
+        await SaveMessage({ currentRoom, message, username });
+      }
+      catch (err) {
+        console.error('Kayıt başarısız, tekrar deneyin.');
+      }
+  }
 
   const handleJoinRoom = () => {
     if (room) {

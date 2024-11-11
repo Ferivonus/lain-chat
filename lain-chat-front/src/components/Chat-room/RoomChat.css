@@ -1,0 +1,58 @@
+/* src/components/RoomChat/RoomChat.css */
+
+.room-chat {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.room-chat h2 {
+    text-align: center;
+}
+
+.messages {
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.message {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input input {
+    width: 80%;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.input button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.input button:hover {
+    background-color: #45a049;
+}
+
+.input button:active {
+    background-color: #388e3c;
+    /* Slightly darker green when active */
+}

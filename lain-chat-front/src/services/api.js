@@ -1,6 +1,33 @@
 // src/services/api.js
 import axios from 'axios';
 
+
+// Function to send messages to the API with the username
+export const SaveMessage = async (roomId, message, username) => {
+  try {
+    const response = await axios.post('http://localhost:5000/api/messages/send', {  
+      roomId: roomId,
+      message: message,
+      username: username,  // Include username in the request
+    });
+    console.log('Message successfully sent to the API:', response.data);
+  } catch (error) {
+    console.error('Error sending message to the API:', error);
+  }
+};
+
+// Function to fetch messages from the API
+export const getMessageRoom = async (roomId) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/messages/${roomId}`);
+    console.log('Fetched messages:', response.data.messages);
+    return response.data.messages;
+  } catch (error) {
+    console.error('Error fetching messages from API:', error);
+    return [];  // Return an empty array in case of error
+  }
+};
+
 // API URL for your backend
 const AUTH_API_URL = 'http://localhost:5000/api/auth';  // Adjust this based on your backend URL
 
