@@ -11,7 +11,8 @@ function Home() {
           Enter the world of connections and conversations. Join a room to get started.
         </p>
         <div className="cta">
-          <Link to="/room" className="join-button">Join a Room</Link>
+          {/* Update the Link to the correct route */}
+          <Link to="/chat-home" className="join-button">Join a Room</Link>
         </div>
       </div>
     </div>

@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
-import ChatRoom from './components/Chat-room/Chat-room';
+import ChatHome from './components/Chat-room/Chat-home/ChatHome';
+import GroupChat from './components/Chat-room/Group-chat/GroupChat';
+import PrivateChat from './components/Chat-room/Private-chat/PrivateChat';
 import ProtectedRoute from './protections/ProtectedRoute'; // Import ProtectedRoute
 
 // Importing the CSS file for styling
@@ -14,22 +16,23 @@ function App() {
     <Router>
       <div className="App">
         {/* Navigation Menu */}
-        <nav className="navbar">
+        <nav className="navbar" aria-label="Main Navigation">
           <ul className="nav-links">
             <li>
-              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/" className="nav-link" aria-label="Go to Home page">Home</Link>
             </li>
             <li>
-              <Link to="/login" className="nav-link">Login</Link>
+              <Link to="/login" className="nav-link" aria-label="Go to Login page">Login</Link>
             </li>
             <li>
-              <Link to="/register" className="nav-link">Register</Link>
+              <Link to="/register" className="nav-link" aria-label="Go to Register page">Register</Link>
             </li>
             <li>
-              <Link to="/room" className="nav-link">Chat Room</Link>
+              <Link to="/chat-home" className="nav-link" aria-label="Go to Chat Home">Chat Home</Link>
             </li>
           </ul>
         </nav>
+
 
         {/* Main Title */}
         <h1 className="app-title">Chat App</h1>
@@ -43,20 +46,32 @@ function App() {
           {/* Home Page */}
           <Route path="/" element={<Home />} />
 
-          {/* Protected Routes */}
-          <Route
-            path="/room"
+          {/* Chat Home Page - For selecting chat type */}
+          <Route 
+            path="/chat-home" 
             element={
               <ProtectedRoute>
-                <ChatRoom />
+                <ChatHome />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Group Chat Route */}
+          <Route
+            path="/group-chat/:groupName" 
+            element={
+              <ProtectedRoute>
+                <GroupChat />
               </ProtectedRoute>
             }
           />
+
+          {/* Private Chat Route */}
           <Route
-            path="/chat/:roomId" // Ensure you're passing roomId as a URL parameter
+            path="/private-chat/:privateUsername"
             element={
               <ProtectedRoute>
-                <ChatRoom />
+                <PrivateChat />
               </ProtectedRoute>
             }
           />

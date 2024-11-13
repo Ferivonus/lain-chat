@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';  // Import js-cookie
 import io from 'socket.io-client';
 import { SaveMessage } from '../../services/api';
 
-const socket = io('http://localhost:5004');  // Backend portu 4000
+const socket = io('http://localhost:5004');  // Socket portu 5004
 
 function ChatRoom() {
   const [message, setMessage] = useState('');
@@ -14,7 +14,7 @@ function ChatRoom() {
   const { room: roomParam } = useParams(); 
   const [username, setUsername] = useState('');  
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   useEffect(() => {
 

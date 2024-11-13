@@ -25,6 +25,8 @@ body {
     align-items: center;
     height: 100%;
     text-align: center;
+    padding: 20px;
+    /* Adding some padding around the container */
 }
 
 .home-content {
@@ -37,6 +39,7 @@ body {
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
     /* Neon glow */
     transition: all 0.3s ease;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .home-content:hover {
@@ -45,19 +48,23 @@ body {
 }
 
 .welcome-title {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #00ff00;
     /* Neon green color */
     margin-bottom: 20px;
-    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
-    /* Glowing text effect */
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+    /* Stronger glowing effect */
+    animation: glowEffect 2s infinite alternate;
+    /* Glow effect animation */
 }
 
 .intro-text {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin-bottom: 30px;
     color: #cccccc;
     /* Light gray color */
+    line-height: 1.5;
+    /* Improve readability */
 }
 
 .cta {
@@ -70,10 +77,11 @@ body {
     /* Neon purple color */
     color: #fff;
     font-size: 1.2rem;
-    padding: 10px 30px;
+    padding: 12px 30px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .join-button:hover {
@@ -83,7 +91,18 @@ body {
     /* Glowing effect */
 }
 
-/* Animation for entrance */
+/* Animation for glowing text */
+@keyframes glowEffect {
+    0% {
+        text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+    }
+
+    100% {
+        text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+    }
+}
+
+/* Animation for fade-in */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -92,8 +111,4 @@ body {
     to {
         opacity: 1;
     }
-}
-
-.home-content {
-    animation: fadeIn 1s ease-in-out;
 }

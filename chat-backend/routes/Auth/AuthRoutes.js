@@ -8,6 +8,8 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
+      console.log('Request Body:', req.body);  // Burada gelen body'i yazdırıyoruz
+
 
     if (!username || !password) {
       return res.status(400).send('Kullanıcı adı ve parola gereklidir');
@@ -37,6 +39,8 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+      console.log('Request Body:', req.body);  // Burada gelen body'i yazdırıyoruz
+
 
     if (!username || !password) {
       return res.status(400).send('Kullanıcı adı ve parola gereklidir');
