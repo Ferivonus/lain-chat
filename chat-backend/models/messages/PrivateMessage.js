@@ -6,7 +6,7 @@ const PrivatemessageSchema = new Schema({
   chatId: {
     type: String,
     required: true,
-    index: true,
+    index: true,  // Indexing for performance with queries
   },
   username: {
     type: String,
@@ -22,7 +22,7 @@ const PrivatemessageSchema = new Schema({
   },
 });
 
-PrivatemessageSchema.virtual('id').get(function() {
+PrivatemessageSchema.virtual('id').get(function () {
   return this._id.toHexString();
 });
 
@@ -30,8 +30,8 @@ PrivatemessageSchema.set('toJSON', {
   virtuals: true,
 });
 
-PrivatemessageSchema.index({ timestamp: 1 });
+PrivatemessageSchema.index({ timestamp: 1 }); // Index by timestamp for sorting
 
-const Message = mongoose.model('PrivateMessage', PrivatemessageSchema);
+const Message = mongoose.model('P2pMessage', PrivatemessageSchema);
 
 module.exports = Message;

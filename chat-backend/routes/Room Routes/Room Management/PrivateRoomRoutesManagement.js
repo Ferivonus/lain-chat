@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const PrivateRoom = require('../../models/ChatRooms/PrivateChatRoom');
+const PrivateRoom = require('../../../models/ChatRooms/PrivateChatRoom');
 
 // Yeni özel oda oluştur
 router.post('/create', async (req, res) => {

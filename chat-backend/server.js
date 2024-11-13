@@ -4,12 +4,12 @@ const http = require('http');
 const socketIo = require('socket.io');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/AuthRoutes');
-const PublicChatRoomRoutes = require('./routes/Room Management/PublicChatRoomRoutes');
-const PrivateMessageRoutes = require('./routes/Room Send-Get/PrivateMessagesRoutes');
-const GroupMessageRoutes = require('./routes/Room Send-Get/PublicMessageRoutes');
-const p2pChatRoom = require('./routes/Room Management/P2pChatRoom');
-const PrivateChatRoom = require('./routes/Room Send-Get/PrivateMessagesRoutes');
-const PublicChatRoom =  require('./routes/Room Send-Get/PublicMessageRoutes');
+const PublicChatRoomRoutes = require('./routes/Room Routes/Room Management/PublicChatRoomRoutesManagement');
+const PrivateMessageRoutes = require('./routes/Room Routes/Room GetSet/PrivateMessagesRoutesGetSet');
+const GroupMessageRoutes = require('./routes/Room Routes/Room GetSet/PublicMessageRoutesGetSet');
+const p2pChatRoom = require('./routes/Room Routes/Room Management/P2pChatRoomManagement');
+const PrivateChatRoom = require('./routes/Room Routes/Room GetSet/PrivateMessagesRoutesGetSet');
+const PublicChatRoom =  require('./routes/Room Routes/Room GetSet/PublicMessageRoutesGetSet');
 
 require('dotenv').config();
 const apiPort = process.env.API_PORT || 5000; 
