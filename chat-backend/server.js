@@ -1,17 +1,24 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const http = require('http');
 const socketIo = require('socket.io');
-const mongoose = require('mongoose');
+
+// Import routes
 const authRoutes = require('./routes/AuthRoutes');
+
+//room management
 const PublicChatRoomRoutes = require('./routes/Room Routes/Room Management/PublicChatRoomRoutesManagement');
-const PrivateMessageRoutes = require('./routes/Room Routes/Room GetSet/PrivateMessagesRoutesGetSet');
-const GroupMessageRoutes = require('./routes/Room Routes/Room GetSet/PublicMessageRoutesGetSet');
-const p2pChatRoom = require('./routes/Room Routes/Room Management/P2pChatRoomManagement');
+const PrivateChatRoomRoutes = require('./routes/Room Routes/Room Management/PrivateRoomRoutesManagement');
+//Room get set
 const PrivateChatRoom = require('./routes/Room Routes/Room GetSet/PrivateMessagesRoutesGetSet');
-const PublicChatRoom =  require('./routes/Room Routes/Room GetSet/PublicMessageRoutesGetSet');
+const PublicChatRoom = require('./routes/Room Routes/Room GetSet/PublicMessageRoutesGetSet');
+//p2p management and get set
+const p2pChatRoom = require('./routes/p2p/P2p Management/P2pChatRoomManagement');
+const p2pChatRoomgetset = require('./routes/p2p/p2p Message GetSet/p2pMessgeGetSetRoutes');
 
 require('dotenv').config();
+
 const apiPort = process.env.API_PORT || 5000; 
 const socketPort = process.env.SOCKET_PORT || 5004; 
 
@@ -26,16 +33,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// Authentication Routes
 app.use('/api/auth', authRoutes);        
-app.use('/api/room', RoomRoutes);
-app.use('/api/privateMessages', PrivateMessageRoutes);
-app.use('/api/roomMessages', GroupMessageRoutes);
 
-// Room Creates:
-app.use('/api/publicChatRoom', PublicChatRoom);
-app.use('/api/privateChatRoom', PrivateChatRoom);
-app.use('/api/P2PChaRoom', p2pChatRoom);
+// Management Routes
+app.use('/api/publicChatRoom/management', PublicChatRoomRoutes);
+app.use('/api/privateChatRoom/management', PrivateChatRoomRoutes);
+app.use('/api/p2pChatRoom/management', p2pChatRoom);
 
+// Get/Set Routes
+app.use('/api/privateMessages/get-set', PrivateChatRoom);
+app.use('/api/roomMessages/get-set', PublicChatRoom);
+app.use('/api/p2pChatRoom/get-set', p2pChatRoomgetset);
 
 console.log('DB URI:', process.env.DB_URI);  
 
