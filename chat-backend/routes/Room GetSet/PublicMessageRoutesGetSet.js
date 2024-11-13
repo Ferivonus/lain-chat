@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Message = require('../../models/GroupMessage');  
+const Message = require('../../models/messages/GroupMessage');  
 
 router.post('/send', async (req, res) => {
   const { roomId, message, username } = req.body;

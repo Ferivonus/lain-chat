@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const PrivateChatRoom = require('../../models/p2pChatRoom');
+const PrivateChatRoom = require('../../models/ChatRooms/p2pChatRoom');
 
 // Yeni birebir konuşma odası oluştur
 router.post('/create', async (req, res) => {

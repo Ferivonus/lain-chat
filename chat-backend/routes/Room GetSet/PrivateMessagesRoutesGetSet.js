@@ -1,7 +1,7 @@
 // privateMessages.js
 const express = require('express');
 const router = express.Router();
-const Message = require('../../models/PrivateMessage');
+const Message = require('../../models/messages/PrivateMessage');
 
 // Send a private message
 router.post('/send', async (req, res) => {
