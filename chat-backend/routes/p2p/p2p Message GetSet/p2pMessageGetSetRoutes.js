@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Message = require('../../models/ChatRooms/p2pMessage');
+const Message = require('../../../models/messages/PrivateMessage');
 
 // Send a message to a specific chat (based on chatId)
 router.post('/send', async (req, res) => {

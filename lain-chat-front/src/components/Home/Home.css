@@ -1,114 +1,123 @@
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Home.css */
 
 body {
-    font-family: 'Inter', Arial, sans-serif;
-    background-color: #121212;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #1a1a1a;
     /* Dark background */
-    color: #e0e0e0;
-    /* Light gray text */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    font-size: 1.2rem;
+    color: #e6e6e6;
+    /* Light text for contrast */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 .home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 20px;
     text-align: center;
-    padding: 20px;
-    /* Adding some padding around the container */
+    position: relative;
+    color: #e6e6e6;
 }
 
-.home-content {
-    background-color: #1e1e1e;
-    /* Slightly lighter background */
-    padding: 40px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-    /* Neon glow */
-    transition: all 0.3s ease;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.home-content:hover {
-    box-shadow: 0 0 40px rgba(0, 255, 0, 0.7);
-    /* More glowing effect on hover */
-}
-
-.welcome-title {
-    font-size: 2.8rem;
-    color: #00ff00;
-    /* Neon green color */
+.home-header h1 {
+    font-size: 3rem;
     margin-bottom: 20px;
-    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-    /* Stronger glowing effect */
-    animation: glowEffect 2s infinite alternate;
-    /* Glow effect animation */
+    color: #00ff00;
+    /* Neon green */
+    text-shadow: 0px 0px 10px #00ff00, 0px 0px 20px #00ff00;
 }
 
-.intro-text {
-    font-size: 1.6rem;
-    margin-bottom: 30px;
+.home-header p {
+    font-size: 1.3rem;
+    color: #b3b3b3;
+    margin-top: 10px;
+}
+
+.features,
+.current-features {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #2d2d2d;
+    /* Dark background for sections */
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 255, 0, 0.3);
+    /* Greenish glow effect */
+}
+
+.features h2,
+.current-features h2 {
+    font-size: 2rem;
+    color: #ff00ff;
+    /* Neon pink */
+    margin-bottom: 10px;
+    text-shadow: 0px 0px 10px #ff00ff, 0px 0px 20px #ff00ff;
+}
+
+.features ul {
+    list-style: none;
+    padding: 0;
     color: #cccccc;
-    /* Light gray color */
-    line-height: 1.5;
-    /* Improve readability */
+}
+
+.features li {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.current-features p {
+    font-size: 1.2rem;
+    color: #cccccc;
 }
 
 .cta {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
-.join-button {
+.join-room-button {
+    padding: 15px 25px;
+    background-color: #00ff00;
+    /* Neon green button */
+    color: #1a1a1a;
+    border: none;
+    border-radius: 50px;
     text-decoration: none;
-    background-color: #ff00ff;
-    /* Neon purple color */
-    color: #fff;
-    font-size: 1.2rem;
-    padding: 12px 30px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     cursor: pointer;
+    box-shadow: 0px 0px 15px #00ff00;
+    transition: all 0.3s ease-in-out;
 }
 
-.join-button:hover {
-    background-color: #ff00cc;
-    /* Lighter purple on hover */
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
-    /* Glowing effect */
+.join-room-button:hover {
+    background-color: #ff00ff;
+    /* Change to neon pink on hover */
+    box-shadow: 0px 0px 25px #ff00ff;
 }
 
-/* Animation for glowing text */
-@keyframes glowEffect {
-    0% {
-        text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-    }
-
-    100% {
-        text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
-    }
+.join-room-button:active {
+    background-color: #00cc00;
+    /* Slightly darker green when clicked */
 }
 
-/* Animation for fade-in */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+.home-footer {
+    margin-top: 60px;
+    font-size: 1rem;
+    color: #b3b3b3;
+    letter-spacing: 1px;
+}
 
-    to {
-        opacity: 1;
-    }
+.home-footer a {
+    color: #00ff00;
+    /* Neon green link */
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.home-footer a:hover {
+    color: #ff00ff;
+    /* Neon pink on hover */
+    text-decoration: underline;
 }

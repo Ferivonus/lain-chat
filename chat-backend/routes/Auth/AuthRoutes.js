@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../../models/auth/User');
 const router = express.Router();
 
 // Kayıt API
@@ -62,6 +62,35 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Bir hata oluştu, lütfen tekrar deneyin');
+  }
+});
+
+router.patch('/edit-account', async (req, res) => {
+  const { bio, picture } = req.body;
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).send('Yetkisiz erişim');
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId;
+
+    const updatedData = {};
+    if (bio) updatedData.bio = bio;
+    if (picture) updatedData.picture = picture;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updatedData, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).send('Kullanıcı bulunamadı');
+    }
+
+    res.status(200).send({ message: 'Hesap başarıyla güncellendi', data: updatedUser });
+  } catch (error) {
+    console.error('Error updating account:', error);
+    res.status(500).send('Hesap güncelleme sırasında bir hata oluştu');
   }
 });
 

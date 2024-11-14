@@ -14,9 +14,9 @@ const Login = () => {
     try {
       const response = await loginUser({ username, password });
       
-      Cookies.set('token', response.token, { expires: 1 });  
-      Cookies.set('username', username, { expires: 1 });  
-      Cookies.set('password', password, { expires: 1 });  
+      Cookies.set('token', response.token, { expires: 7 });  
+      Cookies.set('username', username, { expires: 7 });  
+      Cookies.set('password', password, { expires: 7 });  
       
       // Redirect to the homepage
       navigate('/');  

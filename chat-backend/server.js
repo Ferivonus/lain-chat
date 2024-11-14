@@ -5,7 +5,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 // Import routes
-const authRoutes = require('./routes/AuthRoutes');
+const authRoutes = require('./routes/Auth/AuthRoutes');
 
 //room management
 const PublicChatRoomRoutes = require('./routes/Room Routes/Room Management/PublicChatRoomRoutesManagement');
@@ -15,7 +15,7 @@ const PrivateChatRoom = require('./routes/Room Routes/Room GetSet/PrivateMessage
 const PublicChatRoom = require('./routes/Room Routes/Room GetSet/PublicMessageRoutesGetSet');
 //p2p management and get set
 const p2pChatRoom = require('./routes/p2p/P2p Management/P2pChatRoomManagement');
-const p2pChatRoomgetset = require('./routes/p2p/p2p Message GetSet/p2pMessgeGetSetRoutes');
+const p2pChatRoomgetset = require('./routes/p2p/p2p Message GetSet/p2pMessageGetSetRoutes');
 
 require('dotenv').config();
 
@@ -34,17 +34,17 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Authentication Routes
-app.use('/api/auth', authRoutes);        
+app.use('/api/management/auth', authRoutes);        
 
 // Management Routes
-app.use('/api/publicChatRoom/management', PublicChatRoomRoutes);
-app.use('/api/privateChatRoom/management', PrivateChatRoomRoutes);
-app.use('/api/p2pChatRoom/management', p2pChatRoom);
+app.use('/api/management/publicChatRoom', PublicChatRoomRoutes);
+app.use('/api/management/privateChatRoom', PrivateChatRoomRoutes);
+app.use('/api/management/p2pChatRoom', p2pChatRoom);
 
 // Get/Set Routes
-app.use('/api/privateMessages/get-set', PrivateChatRoom);
-app.use('/api/roomMessages/get-set', PublicChatRoom);
-app.use('/api/p2pChatRoom/get-set', p2pChatRoomgetset);
+app.use('/api/get-set/privateMessages', PrivateChatRoom);
+app.use('/api/get-set/roomMessages', PublicChatRoom);
+app.use('/api/get-set/p2pChatRoom', p2pChatRoomgetset);
 
 console.log('DB URI:', process.env.DB_URI);  
 
@@ -57,7 +57,7 @@ const connectDB = async () => {
     console.log('MongoDB connected');
   } catch (error) {
     console.error('MongoDB connection error:', error);
-    setTimeout(connectDB, 5000); // Retry after 5 seconds
+    setTimeout(connectDB, 5000);
   }
 };
 

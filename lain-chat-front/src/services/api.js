@@ -1,12 +1,74 @@
 import axios from 'axios';
 
-// API URLs
-const AUTH_API_URL = 'http://localhost:5000/api/auth';  
-const ROOM_API_URL = 'http://localhost:5000/api/room'; 
-const PRIVATE_MESSAGE_API_URL = 'http://localhost:5000/api/privateMessages';
-const GROUP_MESSAGE_API_URL = 'http://localhost:5000/api/roomMessages';
+// Management API URLs
+const MANAGEMENT_API_URL = 'http://localhost:5000/api/management';
+const ROOM_API_URL = `${MANAGEMENT_API_URL}/room`;  // URL for managing rooms
+const AUTH_API_URL = `${MANAGEMENT_API_URL}/auth`;  // URL for managing accounts
 
-// Send a private message
+export const createNewRoom = async (roomName, creatorUsername) => {
+  try {
+    const response = await axios.post(`${ROOM_API_URL}/create`, {
+      room_name: roomName,
+      creator_username: creatorUsername,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating room:", error);
+    throw error;
+  }
+};
+
+export const loginUser = async (credentials) => {
+  try {
+    const response = await axios.post(`${AUTH_API_URL}/login`, credentials);
+    return response.data;
+  } catch (error) {
+    console.error('Error logging in:', error);
+    throw error;
+  }
+};
+
+export const registerUser = async (userData) => {
+  try {
+    const response = await axios.post(`${AUTH_API_URL}/register`, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error registering:', error);
+    throw error;
+  }
+};
+
+export const editAccount = async (bio, picture, token) => {
+  try {
+    const response = await axios.patch(`${AUTH_API_URL}/edit-account`, {
+      bio: bio,
+      picture: picture
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (response.status === 200) {
+      console.log('Account successfully updated:', response.data.data);
+      return response.data.data;
+    } else {
+      console.error('Error in response:', response.data.error);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error updating account:', error);
+    throw error;
+  }
+};
+
+
+const GET_SET_API_URL = 'http://localhost:5000/api/get-set';
+const PRIVATE_MESSAGE_API_URL = `${GET_SET_API_URL}/privateMessages`;
+const GROUP_MESSAGE_API_URL = `${GET_SET_API_URL}/roomMessages`;
+const P2P_CHAT_ROOM_API_URL = `${GET_SET_API_URL}/p2pChatRoom`;  // URL for p2p chat rooms
+
+// Send a private message (Get/Set API)
 export const sendPrivateMessageToChat = async (chatId, message, username) => {
   try {
     const response = await axios.post(`${PRIVATE_MESSAGE_API_URL}/send`, {
@@ -27,7 +89,7 @@ export const sendPrivateMessageToChat = async (chatId, message, username) => {
   }
 };
 
-// Fetch all private messages for a specific chat
+// Fetch all private messages for a specific chat (Get/Set API)
 export const fetchPrivateMessagesForChat = async (chatId) => {
   try {
     const response = await axios.get(`${PRIVATE_MESSAGE_API_URL}/${chatId}`);
@@ -44,16 +106,13 @@ export const fetchPrivateMessagesForChat = async (chatId) => {
   }
 };
 
-// Save a message to a specific room
+// Send a message to a specific room (Get/Set API)
 export const sendMessageToRoom = async (roomId, message, username) => {
   try {
-    console.log("room id:", roomId);
-    console.log("message: ", message);
-    console.log("username: ", username);
-    const response = await axios.post(`${GROUP_MESSAGE_API_URL}/send`, {  
+    const response = await axios.post(`${GROUP_MESSAGE_API_URL}/send`, {
       roomId: roomId,
       message: message,
-      username: username, 
+      username: username,
     });
     console.log('Message successfully sent to the room:', response.data);
   } catch (error) {
@@ -61,66 +120,41 @@ export const sendMessageToRoom = async (roomId, message, username) => {
   }
 };
 
-// Fetch messages from a specific room
+// Fetch messages from a specific room (Get/Set API)
 export const fetchMessagesFromRoom = async (roomId) => {
   try {
     const response = await axios.get(`${GROUP_MESSAGE_API_URL}/${roomId}`);
     if (response.data.success) {
       console.log('Fetched messages for room:', response.data.data);
-      return response.data.data;  // Adjusted to access nested data
+      return response.data.data;
     } else {
       console.error('Error in response:', response.data.error);
       return [];
     }
   } catch (error) {
     console.error('Error fetching messages from room:', error);
-    return [];  
+    return [];
   }
 };
 
-// User login
-export const loginUser = async (credentials) => {
-  try {
-    const response = await axios.post(`${AUTH_API_URL}/login`, credentials);
-    return response.data; 
-  } catch (error) {
-    console.error('Error logging in:', error);
-    throw error;
-  }
-};
-
-// User registration
-export const registerUser = async (userData) => {
-  try {
-    const response = await axios.post(`${AUTH_API_URL}/register`, userData);
-    return response.data; 
-  } catch (error) {
-    console.error('Error registering:', error);
-    throw error;
-  }
-};
-
-// Create a new chat room
-export const createNewRoom = async (roomName, creatorUsername) => {
-  try {
-    const response = await axios.post(ROOM_API_URL, {
-      room_name: roomName,
-      creator_username: creatorUsername
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error creating room: ", error);
-    throw error;
-  }
-};
-
-// Fetch all chat rooms
+// Fetch all rooms (Get/Set API)
 export const fetchAllRooms = async () => {
   try {
-    const response = await axios.get(ROOM_API_URL);
+    const response = await axios.get(ROOM_API_URL);  // Adjusted for Get/Set
     return response.data;
   } catch (error) {
-    console.error("Error fetching rooms:", error);
+    console.error('Error fetching rooms:', error);
+    throw error;
+  }
+};
+
+// Fetch P2P chat room data (Get/Set API)
+export const fetchP2PChatRoomData = async (chatId) => {
+  try {
+    const response = await axios.get(`${P2P_CHAT_ROOM_API_URL}/${chatId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching P2P chat room data:', error);
     throw error;
   }
 };

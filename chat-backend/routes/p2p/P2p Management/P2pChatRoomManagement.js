@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const PrivateChatRoom = require('../../../models/ChatRooms/p2pChatRoom');
+const PrivateChatRoom = require('../../../models/ChatRooms/p2pChat');
+
 const bcrypt = require('bcrypt');
 
 // Create a new one-on-one chat room
@@ -25,8 +26,7 @@ router.post('/create', async (req, res) => {
   }
 });
 
-// Find private rooms between two users
-router.get('/find-a-pair', async (req, res) => {
+router.get('/check-the-pair', async (req, res) => {
   const { username_1, username_2, password } = req.query;
 
   if (!username_1 || !username_2 || !password) {
@@ -45,16 +45,40 @@ router.get('/find-a-pair', async (req, res) => {
       return res.status(404).send({ error: 'No chat room found between these users.' });
     }
 
-    // Verify the password
-    const isMatch = await bcrypt.compare(password, chatRoom.password);
+    const isMatch = bcrypt.compare(password, chatRoom.password);
     if (!isMatch) {
       return res.status(401).send({ error: 'Incorrect password.' });
     }
 
-    res.status(200).send({ message: 'One-on-one chat room found successfully.', data: chatRoom });
+    res.status(200).send({ message: 'Access to the one-on-one chat room is verified.', data: chatRoom });
   } catch (error) {
-    console.error('Error retrieving chat room:', error);
-    res.status(500).send({ error: 'An error occurred while retrieving the chat room.' });
+    console.error('Error verifying chat room access:', error);
+    res.status(500).send({ error: 'An error occurred while verifying the chat room access.' });
+  }
+});
+
+// Get all private rooms for a specific user
+router.get('/my-rooms', async (req, res) => {
+  const { username } = req.query;
+
+  if (!username) {
+    return res.status(400).send({ error: 'Username is required to retrieve your rooms.' });
+  }
+
+  try {
+    // Find all chat rooms where the user is a participant
+    const chatRooms = await PrivateChatRoom.find({
+      $or: [{ user1: username }, { user2: username }]
+    });
+
+    if (chatRooms.length === 0) {
+      return res.status(404).send({ message: 'No chat rooms found for this user.' });
+    }
+
+    res.status(200).send({ message: 'User-specific private chat rooms retrieved successfully.', data: chatRooms });
+  } catch (error) {
+    console.error('Error retrieving user-specific chat rooms:', error);
+    res.status(500).send({ error: 'An error occurred while retrieving the chat rooms.' });
   }
 });
 

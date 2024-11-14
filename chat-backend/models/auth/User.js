@@ -14,7 +14,16 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now  
-  }
+  },
+  picture: {
+    type: String, 
+    default: '',  
+  },
+  bio: {
+    type: String, 
+    maxlength: 500, 
+    default: '',   
+  },
 });
 
 userSchema.virtual('id').get(function() {

@@ -6,7 +6,8 @@ import Register from './components/Auth/Register';
 import ChatHome from './components/Chat-room/Chat-home/ChatHome';
 import GroupChat from './components/Chat-room/Group-chat/GroupChat';
 import PrivateChat from './components/Chat-room/Private-chat/PrivateChat';
-import ProtectedRoute from './protections/ProtectedRoute'; // Import ProtectedRoute
+import UserProfile from './components/user/UserProfile/UserProfile'
+import ProtectedRoute from './protections/ProtectedRoute';
 
 // Importing the CSS file for styling
 import './App.css';
@@ -15,7 +16,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* Navigation Menu */}
         <nav className="navbar" aria-label="Main Navigation">
           <ul className="nav-links">
             <li>
@@ -34,19 +34,14 @@ function App() {
         </nav>
 
 
-        {/* Main Title */}
         <h1 className="app-title">Chat App</h1>
 
-        {/* Routes */}
         <Routes>
-          {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Home Page */}
           <Route path="/" element={<Home />} />
 
-          {/* Chat Home Page - For selecting chat type */}
           <Route 
             path="/chat-home" 
             element={
@@ -56,7 +51,6 @@ function App() {
             } 
           />
 
-          {/* Group Chat Route */}
           <Route
             path="/group-chat/:groupName" 
             element={
@@ -66,7 +60,6 @@ function App() {
             }
           />
 
-          {/* Private Chat Route */}
           <Route
             path="/private-chat/:privateUsername"
             element={
@@ -75,6 +68,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/profile" element={<UserProfile />} />  {/* Add this route */}
         </Routes>
       </div>
     </Router>
